@@ -1,8 +1,8 @@
 import requests
 import time
-import matplotlib.pyplot as plt
 from collections import OrderedDict
 import numpy as np
+import plotly.graph_objects as go
 
 instalacoes= {
     
@@ -73,14 +73,9 @@ museu = OrderedDict(sorted(result_dict['Museu do Índio'].items(), key=lambda x:
 taxonomias = list(museu.keys())
 valores = list(museu.values())
 
-y_pos = np.arange(len(taxonomias))
-plt.bar(y_pos, valores, align='center', alpha=0.5)
-plt.xticks(y_pos, taxonomias,rotation='vertical')
-plt.ylabel('Nº de Termos')
-plt.title('Taxonomias')
+fig = go.Figure(data=[go.Bar(x=taxonomias, y=valores, text=valores, textposition='auto')])
 
-for i in range(len(valores)):
-
-    plt.text(x=i , y = valores[i]+1, s = str(valores[i]), fontsize = 10)
-
-plt.show()
+fig.update_layout(title='Nº de Itens por Taxonomias', xaxis_tickfont_size=14,yaxis=dict(title='Nº de Itens',
+        titlefont_size=16, tickfont_size=14))
+                  
+fig.show()
