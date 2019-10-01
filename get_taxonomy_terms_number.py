@@ -15,11 +15,6 @@ instalacoes= {
     "Funarte":"http://www.funarte.gov.br",
     "Museu do Índio":"http://tainacan.museudoindio.gov.br",
 }
-instalacoes_1= {
-    
-    "Museu Victor Meirelles":"http://museuvictormeirelles.acervos.museus.gov.br",
-}
-
 
 
 items_endpoint = '/wp-json/tainacan/v2/items'
@@ -82,7 +77,7 @@ y_pos = np.arange(len(taxonomias))
 plt.bar(y_pos, valores, align='center', alpha=0.5)
 plt.xticks(y_pos, taxonomias,rotation='vertical')
 plt.ylabel('Nº de Termos')
-plt.title('VM - Taxonomias')
+plt.title('Taxonomias')
 
 for i in range(len(valores)):
 
