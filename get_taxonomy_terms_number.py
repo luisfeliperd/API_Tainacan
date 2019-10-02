@@ -1,5 +1,6 @@
 import requests
 import time
+import matplotlib.pyplot as plt
 from collections import OrderedDict
 import numpy as np
 import plotly.graph_objects as go
@@ -12,15 +13,17 @@ instalacoes= {
     "Museu do Ouro":"http://museudoouro.acervos.museus.gov.br",
     "Museu Regional Casa dos Ottoni":"http://museuregionalcasadosottoni.acervos.museus.gov.br",
     "Museu de Itaipu":"http://museudearqueologiadeitaipu.museus.gov.br",
-    "Funarte":"http://www.funarte.gov.br",
-    "Museu do Índio":"http://tainacan.museudoindio.gov.br",
+    "Museu das Bandeiras":"http://museusibramgoias.acervos.museus.gov.br/",
+    "Museu das Missões":"http://museudasmissoes.acervos.museus.gov.br/"
+    
+    
 }
-
 
 items_endpoint = '/wp-json/tainacan/v2/items'
 collections_endpoint = '/wp-json/tainacan/v2/collections'
 taxonomies_endpoint = '/wp-json/tainacan/v2/taxonomies'
 terms_endpoint = '/wp-json/tainacan/v2/taxonomy/{}/terms'
+
 
 #Para cada request é utilizado um try/except caso haja uma desconexão ou limitação da API. 
 
@@ -66,16 +69,19 @@ for instalacao in instalacoes.keys():
                 result_dict[instalacao][taxonomy['name']] = len(terms_resp.json())
 
 
-#Cria um dricionário ordenado para cada dicionário de cada museu resultante do processo anterior
-museu = OrderedDict(sorted(result_dict['Museu do Índio'].items(), key=lambda x: x[1]))
 
-#parametriza o gráfico no matplotlib
-taxonomias = list(museu.keys())
-valores = list(museu.values())
+for museu_nome in result_dict.keys():
+	
+    #Cria um dricionário ordenado para cada dicionário de cada museu resultante do processo anterior
+    #museu_nome = 'Museu Victor Meirelles'
+    museu = OrderedDict(sorted(result_dict[museu_nome].items(), key=lambda x: x[1]))
 
-fig = go.Figure(data=[go.Bar(x=taxonomias, y=valores, text=valores, textposition='auto')])
+    #parametriza o gráfico no matplotlib
+    taxonomias = list(museu.keys())
+    valores = list(museu.values())
 
-fig.update_layout(title='Nº de Itens por Taxonomias', xaxis_tickfont_size=14,yaxis=dict(title='Nº de Itens',
-        titlefont_size=16, tickfont_size=14))
-                  
-fig.show()
+    fig = go.Figure(data=[go.Bar(x=taxonomias, y=valores, text=valores, textposition='auto')])
+
+    fig.update_layout(title='Nº de Termos por Taxonomias - {}'.format(museu_nome))
+
+    fig.write_image("{}.png".format(museu_nome))
