@@ -1,26 +1,15 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import requests
 import json
 import pandas as pd
-
-
-# In[2]:
-
 
 dict_endpoint = {
 "col_endpoint":"/wp-json/tainacan/v2/collections",
 "meta_endpoint":"/wp-json/tainacan/v2/collection/{}/metadata/?perpage={}",
 "tax_endpoint":"/wp-json/tainacan/v2/taxonomies",
 "item_endpoint":"/wp-json/tainacan/v2/collection/{}/items/?perpage={}&paged={}"}
-
-
-# In[3]:
-
 
 instalacoes= {    
     "Museu Victor Meirelles":["http://museuvictormeirelles.acervos.museus.gov.br","1"],
@@ -34,16 +23,10 @@ instalacoes= {
 }
 
 
-# In[4]:
-
-
 colunas = ['id_instalacao','collection_id','id_metadado','name','description','metadata_type','required','collection_key',
            'multiple','display','semantic_uri']
 
 tabelametadados = pd.DataFrame(columns=colunas)
-
-
-# In[7]:
 
 
 for k in instalacoes.keys():
@@ -64,9 +47,4 @@ for k in instalacoes.keys():
                 'collection_key':meta["collection_key"],'multiple':meta["multiple"],'display':meta["display"],
                 'semantic_uri':meta["semantic_uri"]}, ignore_index=True)
 
-
-# In[8]:
-
-
 tabelametadados.to_csv('metadadosIbram2.csv')
-
