@@ -1,25 +1,14 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[2]:
-
-
 import requests
 import json
 from collections import defaultdict
-
-
-# In[3]:
-
 
 instalacao = {"Museu Victor Meirelles":"http://museuvictormeirelles.acervos.museus.gov.br/"}
 
 collection_endpoint = "wp-json/tainacan/v2/collections"
 items_endpoint = "wp-json/tainacan/v2/collection/{}/items"
-
-
-# In[8]:
-
 
 collection_resp = requests.get(instalacao['Museu Victor Meirelles']+collection_endpoint).json()
 paged = 0
@@ -71,10 +60,3 @@ for collection in collection_resp:
                     value_list.append("")
                     
                 metadata_dict[item['metadata'][metadata]['id']].append("||".join(value_list))
-
-
-# In[ ]:
-
-
-
-
