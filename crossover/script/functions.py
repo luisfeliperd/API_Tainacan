@@ -8,7 +8,8 @@ import requests
 import time
 from sqlalchemy import create_engine
 
-mysqlEngine = create_engine('mysql+pymysql://root:Lotus.123@localhost:3306/tainacan_api')
+#Acesso ao banco de dados. Substituir o usuário e a senha.
+mysqlEngine = create_engine('mysql+pymysql://user:password@localhost:3306/tainacan_api')
 dbConnection = mysqlEngine.connect()
 #Função para normalizar os termos (remove espaços do inicio e do fim, e define somente a primeira letra como maiúscula)
 def normalize(string):
