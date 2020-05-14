@@ -6,15 +6,18 @@ Created on Wed May  6 21:26:15 2020
 """
 #Internal path structure 
 import sys
-sys.path.append('C://Users//luisr//OneDrive//Área de Trabalho//crossover_ibram')
+#Adicionar o path do diretório contendo os scripts
+sys.path.append('')
 from dicts import api_access as api, tables
 import functions
 import pandas as pd
 from sqlalchemy import create_engine
 
-mysqlEngine = create_engine('mysql+pymysql://root:Lotus.123@localhost:3306/tainacan_api')
+#Acesso ao banco de dados - Substituir usuário e senha
+mysqlEngine = create_engine('mysql+pymysql://user:password@localhost:3306/tainacan_api')
 dbConnection = mysqlEngine.connect()
 
+#Limpa as tabelas do SQL se necessário.
 #Truncate Collection and Instalation tables
 #functions.truncate_table('colecao')
 #functions.truncate_table('instalacao')
