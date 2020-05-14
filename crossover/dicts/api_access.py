@@ -19,8 +19,9 @@ install_dict = {
         }
 
 dict_endpoint = {
-"col_endpoint":"/wp-json/tainacan/v2/collections",
-"meta_endpoint":"/wp-json/tainacan/v2/collection/{}/metadata/",
-"tax_endpoint":"/wp-json/tainacan/v2/taxonomies",
-"item_endpoint":"/wp-json/tainacan/v2/collection/{}/items/?perpage={}&paged={}", 
-"term_endpoint":"/wp-json/tainacan/v2/taxonomy/{}/terms"}
+"col_endpoint":"/wp-json/tainacan/v2/collections/",
+"meta_endpoint":"/wp-json/tainacan/v2/collection/{}/metadata/?perpage=100",
+"tax_endpoint":"/wp-json/tainacan/v2/taxonomies/",
+"item_endpoint":"/wp-json/tainacan/v2/collection/{}/items/?perpage={}&paged={}",
+"terms_endpoint":"/wp-json/tainacan/v2/taxonomy/{}/terms",
+"term_endpoint":"/wp-json/tainacan/v2/taxonomy/{}/terms/{}"}
