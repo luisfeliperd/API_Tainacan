@@ -87,7 +87,8 @@ for i in range(len(api.install_dict['id'])):
 
                                 #Verifica se o metadado é composto por termos de taxonomias
                                 if inbcm.cross_dict[install_key][metadata_cross] in inbcm.tax_meta:
-                         
+                                    
+                                    #Vericifar possibilidade do separador ser diferente
                                     for value in item['metadata'][item_metadata]['value_as_string'].split(" | "):
                                 
                                         #Get terms table from database updated for each value
@@ -98,6 +99,7 @@ for i in range(len(api.install_dict['id'])):
                                             continue
                                             
                                         #Dealing with term hierarchy
+                                        #Vericar se o identificador muda
                                         if " > " in functions.normalize(value):
                                             value = value.split(" > ")[-1]
                                             
