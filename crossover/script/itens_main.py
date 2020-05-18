@@ -78,6 +78,7 @@ for i in range(len(api.install_dict['id'])):
                     itens_meta = functions.clean_dict(inbcm.itens_meta)
                     
                     #Itera entre os metadados mapeados no crossover
+                    #Utiliza o campo "value_as_string" para recuperar o valor dos metadados
                     for metadata_cross in inbcm.cross_dict[install_key].keys():
                         
                         for item_metadata in item['metadata'].keys():
@@ -87,8 +88,7 @@ for i in range(len(api.install_dict['id'])):
 
                                 #Verifica se o metadado é composto por termos de taxonomias
                                 if inbcm.cross_dict[install_key][metadata_cross] in inbcm.tax_meta:
-                                    
-                                    #Vericifar possibilidade do separador ser diferente
+                         
                                     for value in item['metadata'][item_metadata]['value_as_string'].split(" | "):
                                 
                                         #Get terms table from database updated for each value
@@ -99,7 +99,6 @@ for i in range(len(api.install_dict['id'])):
                                             continue
                                             
                                         #Dealing with term hierarchy
-                                        #Vericar se o identificador muda
                                         if " > " in functions.normalize(value):
                                             value = value.split(" > ")[-1]
                                             
@@ -140,24 +139,31 @@ for i in range(len(api.install_dict['id'])):
                             else:
                                 continue
                                 
+                    #No caso do metadado ser uma taxonomia
                     len_list = []
+                    #Mensura a quantidade de valores em cada metadado a partir do dicionário auxiliar criado acima
                     for lista in itemTermDict.values():
                         len_list.append(len(list(set(lista))))
-            
+                    
+                    # Cria um fluxo de inserção de valores na tabela de relacionamento dos metadados categoricos com os termos
                     for i_list in range(max(len_list)):
                         result_dict = defaultdict(int)
                         
+                        #Cria uma dataframe para inserir os metadados categoricos no banco a cada item.
                         item_term_df = pd.DataFrame(columns=pd.read_sql_table('itens_termos', dbConnection).columns)
                         item_term_df = item_term_df.drop(columns=['id'])
     
+                        #Lida com as posições dos termos nas listas de valores adicionadas ao dicionário auxiliar criado acima
                         for key in itemTermDict.keys():
                             
+                            #Insere a primeira posição de valores das listas do dicionario auxiliar em um dicionário que será inserido no banco
                             if len(itemTermDict[key]) > i_list:
                                 result_dict[key]= itemTermDict[key][i_list]
                         
                             else:
                                 result_dict[key] = None
-    
+                        
+                        #Insere os valores de relacionamento entre itens e termos no banco de dados.
                         item_term_df = item_term_df.append({'id_item':str(api.install_dict['id'][i])+str(new_col_id['id'].values[0])+str(item['id']),
                                                             'autor':result_dict['Autor'],
                                                             'classificacao':result_dict['Classificação'],
