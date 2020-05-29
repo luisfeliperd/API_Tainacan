@@ -17,8 +17,6 @@ from sqlalchemy import create_engine
 mysqlEngine = create_engine('mysql+pymysql://user:password@localhost:3306/tainacan_api')
 dbConnection = mysqlEngine.connect()
 
-#Convert the installation DataFrame to a SQL Table
-pd.DataFrame.from_dict(api.install_dict).to_sql('instalacao', dbConnection, if_exists = 'append', chunksize = 1000, index=False)
 
                                                                             ##Termos##
 #Truncate Terms table
